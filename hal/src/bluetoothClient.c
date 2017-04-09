@@ -8,8 +8,8 @@ int main()
 {
     struct sockaddr_rc addr;
     int listenfd, status;
-    //XX:XX:XX:XX:XX:XX IS BLUETOOTH ADDRESS
-    char dest[18] = "XX:XX:XX:XX:XX:XX";
+    //11:22:33:44:55:66 IS BLUETOOTH ADDRESS
+    char dest[18] = "11:22:33:44:55:66";
     int cc = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
     if(cc < 0){
         perror(“Socket failed”);
