@@ -11,7 +11,8 @@
 ##########################################
 
 # Compiler and Compile Flags
-EC535='/ad/eng/courses/ec/ec535/arm-linux/bin/'
+EC535=/ad/eng/courses/ec/ec535
+#CC=$(EC535)/arm-linux/bin/arm-linux-gcc
 CC=arm-linux-gcc
 CFLAGS=-Wall
 
@@ -27,9 +28,10 @@ CLIENT_SRCS=bluetoothClient.c
 CLIENT_HDRS=
 
 # Include current dir for headers
-INCS=-I.     
+INCS=-I. -I$(EC535)/bluez/include/
 
 # Include necessary libraries
+#LIBS=-L$(EC535)/gumstix/bluez/lib -lbluetooth 
 LIBS=-L/ad/eng/courses/ec/ec535/gumstix/bluez/lib -lbluetooth 
 
 # Intermediate 0bject files
