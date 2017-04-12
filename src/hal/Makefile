@@ -28,7 +28,7 @@ CLIENT_SRCS=bluetoothClient.c
 CLIENT_HDRS=
 
 # Include current dir for headers
-INCS=-I. -I$(EC535)/bluez/include/
+INCS=-I. -I$(EC535)/gumstix/bluez/include/
 
 # Include necessary libraries
 #LIBS=-L$(EC535)/gumstix/bluez/lib -lbluetooth 
