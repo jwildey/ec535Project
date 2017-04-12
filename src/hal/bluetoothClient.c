@@ -1,5 +1,6 @@
 //client.c
 #include <stdio.h>
+#include <unistd.h>
 #include <sys/socket.h>
 #include <error.h>
 #include <bluetooth/bluetooth.h>
@@ -12,8 +13,8 @@ int main()
     char dest[18] = "11:22:33:44:55:66";
     int cc = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
     if(cc < 0){
-        perror(“Socket failed”);
-        exit(1);
+        perror("Socket failed");
+        return -1;
     }
     // set the connection parameters (who to connect to)
     addr.rc_family = AF_BLUETOOTH;
@@ -27,7 +28,7 @@ int main()
     }
     if( status < 0 ){
         perror("write failed");
-        exit(1);
+        return -1;
     }  
     return 0;
 }
