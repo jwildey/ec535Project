@@ -26,7 +26,11 @@ SERVER_HDRS=
 CLIENT_SRCS=bluetoothClient.c
 CLIENT_HDRS=
 
-INCS=-I.     # Include current dir for headers
+# Include current dir for headers
+INCS=-I.     
+
+# Include necessary libraries
+LIBS=-L/ad/eng/courses/ec/ec535/gumstix/bluez/lib -lbluetooth 
 
 # Intermediate 0bject files
 SERVER_OBJS=$(SERVER_SRCS:.c=.o)
@@ -42,11 +46,11 @@ all: $(SERVER_NAME) $(CLIENT_NAME)
 
 # Server Application
 $(SERVER_NAME): $(SERVER_OBJS)
-	$(CC) $(CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $^ -o $@ $(LIBS)
 
 # Server Application
 $(CLIENT_NAME): $(CLIENT_OBJS)
-	$(CC) $(CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $^ -o $@ $(LIBS)
 
 # Server Intermediate Object Files
 $(SERVER_OBJS): %.o: %.c
@@ -58,4 +62,4 @@ $(CLIENT_OBJS): %.o: %.c
 
 # Cleanup
 clean:
-	rm $(OBJS) $(SERVER_NAME) $(CLIENT_NAME)
+	rm $(SERVER_OBJS) $(CLIENT_OBJS) $(SERVER_NAME) $(CLIENT_NAME)
