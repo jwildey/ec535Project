@@ -21,14 +21,14 @@ int gripperStatus;    // Global flag to indicate whether gripper is open(0) or c
 
 // Potentiometers limiting the movement of two motors
 int elbowPot = A4;     
-const int elbowHigh = 585;   // upper limit if wrist is down 585
-const int elbowLow = 250;    // lower limit 250 
+const int elbowHigh = 520;   // upper limit if wrist is down 585
+const int elbowLow = 220;    // lower limit 250 
                              // upper limit if wrist is up 870 
 int elbowValue = 0;          // variable to store incoming value
 
 int wristPot = A5;    
-const int wristLow = 0;      // lower limit   
-const int wristHigh = 0;     // upper limit
+const int wristLow = 230;      // lower limit   
+const int wristHigh = 813;     // upper limit
 int wristValue = 0;          // variable to store incoming value
 
 // connect motor controller pins to Arduino digital pins
@@ -118,8 +118,16 @@ void loop() {
       gripOpen();     // open gripper
   }
   
-  delay(10); 
 }
+
+//test potentiometers on robotic arm for limits
+/*void loop() {
+  wristValue = analogRead(wristPot);
+  elbowValue = analogRead(elbowPot);
+  Serial.print("elbowValue: ");
+  Serial.println(elbowValue);
+  delay(500);
+}*/
 
 // Gripper Range Test
 // Used to find the limits of the servo motor
@@ -143,7 +151,7 @@ void wristUp() {
         digitalWrite(in1_2, HIGH);
         digitalWrite(in2_2, LOW);
         analogWrite(enA_2, 200); 
-        delay(200);
+        delay(100);
         digitalWrite(in1_2, LOW);
         digitalWrite(in2_2, LOW);
     }
@@ -155,7 +163,7 @@ void wristDown() {
         digitalWrite(in1_2, LOW);
         digitalWrite(in2_2, HIGH);
         analogWrite(enA_2, 200);
-        delay(200);
+        delay(100);
         digitalWrite(in1_2, LOW);
         digitalWrite(in2_2, LOW);
     }
@@ -167,7 +175,7 @@ void elbowUp() {
         digitalWrite(in3_1, HIGH);
         digitalWrite(in4_1, LOW);
         analogWrite(enB_1, 200);
-        delay(200);
+        delay(100);
         digitalWrite(in3_1, LOW);
         digitalWrite(in4_1, LOW);
     }
@@ -179,7 +187,7 @@ void elbowDown() {
         digitalWrite(in3_1, LOW);
         digitalWrite(in4_1, HIGH);
         analogWrite(enB_1, 200);
-        delay(200);
+        delay(100);
         digitalWrite(in3_1, LOW);
         digitalWrite(in4_1, LOW);
     }
@@ -189,7 +197,7 @@ void shoulderLeft() {
     digitalWrite(in1_1, HIGH);
     digitalWrite(in2_1, LOW);
     analogWrite(enA_1, 200);
-    delay(200);
+    delay(100);
     digitalWrite(in1_1, LOW);
     digitalWrite(in2_1, LOW);
 }
@@ -198,7 +206,7 @@ void shoulderRight() {
     digitalWrite(in1_1, LOW);
     digitalWrite(in2_1, HIGH);
     analogWrite(enA_1, 200);
-    delay(200);
+    delay(100);
     digitalWrite(in1_1, LOW);
     digitalWrite(in2_1, LOW);
 }
