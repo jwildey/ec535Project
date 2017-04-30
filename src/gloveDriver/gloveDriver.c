@@ -98,13 +98,14 @@ struct file_operations glove_fops = {
 static int glove_major = 61;
 
 // Counter Period (ms)
-static int ctrPer = 500;
+static int ctrPer = 10;
 
 // Robotic Arm Global Variable to be sent over BT
 static int js_x = 0;   // joystick X direction 0-none, 1-up, 2-down
 static int js_y = 0;   // joystick Y direction 0-none, 1-left, 2-right
 static int tilt_z = 0; // indicates that tilt is active 
                        // (move in z direction, 0-none, 1-forw, 1-back)
+static int tilt_cnt = 0;
 static int gripper_state = 0;     // indicates whether to open or close the gripper (0-open, 1-close)
 
 // Recurring Timer
@@ -155,20 +156,20 @@ static void timerCallbackFcn(unsigned long data)
     tilt_state = pxa_gpio_get_value(GPIO_BTN);
 
     // DEBUG
-    printk(KERN_INFO "Read: Xu: %d Xd: %d Yl: %d Yr: %d T: %d Ts: %d G: %d\n", joystick_xu,
-                                                                               joystick_xd,
-                                                                               joystick_yl,
-                                                                               joystick_yr,
-                                                                               tilt,
-                                                                               tilt_state,
-                                                                               gripper);
+    //printk(KERN_INFO "Read: Xu: %d Xd: %d Yl: %d Yr: %d T: %d Ts: %d G: %d\n", joystick_xu,
+    //                                                                           joystick_xd,
+     //                                                                          joystick_yl,
+     //                                                                          joystick_yr,
+      //                                                                         tilt,
+       //                                                                        tilt_state,
+        //                                                                       gripper);
     // END DEBUG
 
     // X Direction State
     if (joystick_xu > 0 )
     {
         js_x = 1;    // set x direction up
-    } else if (joystick_xd ==  0) { // reverse logic due to hardware
+    } else if (joystick_xd >  0) { 
         js_x = 2;    // set x direction down
     } else {
         js_x = 0;    // do nothing
@@ -185,26 +186,28 @@ static void timerCallbackFcn(unsigned long data)
     }
 
     // Z Direction State
-    if (tilt != 0 )
+    if (tilt != 0 && tilt_cnt >=10)
     {
         if (tilt_state == 0) {
             tilt_z = 2;    // set z backwards
         } else {
             tilt_z = 1;    // set z forwards
         }
+        tilt_cnt = 0;
     } else {
         tilt_z = 0;    // do nothing
+        tilt_cnt++;
     }    
 
     // Gripper 
     if (gripper > 0) {
-        gripper_state = 1;    // close gripper
+        gripper_state = 0;    // close gripper
     } else {
-        gripper_state = 0;    // open gripper
+        gripper_state = 1;    // open gripper
     }
 
     // DEBUG
-    printk(KERN_INFO "X: %d Y: %d Z: %d Grip: %d\n", js_x, js_y, tilt_z, gripper_state);
+    //printk(KERN_INFO "X: %d Y: %d Z: %d Grip: %d\n", js_x, js_y, tilt_z, gripper_state);
     // END DEBUG
 
     // Reset Timer
