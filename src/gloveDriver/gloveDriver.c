@@ -201,9 +201,9 @@ static void timerCallbackFcn(unsigned long data)
 
     // Gripper 
     if (gripper > 0) {
-        gripper_state = 0;    // close gripper
+        gripper_state = 1;    // close gripper
     } else {
-        gripper_state = 1;    // open gripper
+        gripper_state = 0;    // open gripper
     }
 
     // DEBUG
