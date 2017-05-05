@@ -1,5 +1,5 @@
 // AUTHOR Ian Hogan
-// 4-26-2017
+// 5-1-2017
 #include <Servo.h>// import servo library
 
 // UART Data from the Raspberry Pi //
@@ -15,7 +15,7 @@ byte GRIPPER = 0;           // indicates gripper motion 0,1 open, close
 
 // Gripper requires 5V to run and does not need a motor driver
 Servo gripper;        // create servo object
-int pos = 80;         // gripper servo position (80 to 140) Start at 80 (open)
+int pos = 140;         // gripper servo position (80 to 140) Start at 140 (closed)
 int gripperStatus;    // Global flag to indicate whether gripper is open(0) or closed(1)
                       // This will be deleted for later application
 
@@ -147,11 +147,12 @@ void grip_range_test() {
 // due to the motor favoring 1 direction over the other
 void wristUp() {
     wristValue = analogRead(wristPot);
-    if ( wristValue < wristHigh ) {
+    elbowValue = analogRead(elbowPot);
+    if ( wristValue < 460 && elbowValue > 220 ) {
         digitalWrite(in1_2, HIGH);
         digitalWrite(in2_2, LOW);
         analogWrite(enA_2, 200); 
-        delay(100);
+        delay(50);
         digitalWrite(in1_2, LOW);
         digitalWrite(in2_2, LOW);
     }
@@ -159,31 +160,34 @@ void wristUp() {
 
 void wristDown() {
     wristValue = analogRead(wristPot);
-    if ( wristValue > wristLow ) {
+    elbowValue = analogRead(elbowPot);
+    if ( wristValue > 230 ) {
         digitalWrite(in1_2, LOW);
         digitalWrite(in2_2, HIGH);
         analogWrite(enA_2, 200);
-        delay(100);
+        delay(50);
         digitalWrite(in1_2, LOW);
         digitalWrite(in2_2, LOW);
     }
 }
 
 void elbowUp() {
+    wristValue = analogRead(wristPot);
     elbowValue = analogRead(elbowPot);
-    if ( elbowValue < elbowHigh ) {
+    if ( elbowValue < 940 || wristValue < 840 ) {
         digitalWrite(in3_1, HIGH);
         digitalWrite(in4_1, LOW);
         analogWrite(enB_1, 200);
         delay(100);
         digitalWrite(in3_1, LOW);
         digitalWrite(in4_1, LOW);
-    }
+    //}
 }
 
 void elbowDown() {
     elbowValue = analogRead(elbowPot);
-    if ( elbowValue > elbowLow ) {
+    wristValue = analogRead(wristPot);
+    if ( elbowValue > 230 ) {
         digitalWrite(in3_1, LOW);
         digitalWrite(in4_1, HIGH);
         analogWrite(enB_1, 200);
@@ -219,11 +223,6 @@ void gripOpen() {
         gripper.write(80);
         delay(15);
     }
-    /*if (pos >= (80+15)) {   // doesnt allow movement if it will surpase set limits
-        pos = pos - 15;     // move in increments of 15 ticks
-        gripper.write(pos);
-        delay(15);
-    }*/
 }
 
 void gripClose() {
@@ -232,10 +231,5 @@ void gripClose() {
         gripper.write(140);
         delay(15);
     }
-    /*if (pos <= (140-15)) {   // doesnt allow movement if it will surpase set limits
-        pos = pos + 15;     // move in increments of 15 ticks
-        gripper.write(pos);
-        delay(15);
-    }*/
 }
 
