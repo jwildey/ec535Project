@@ -4,12 +4,12 @@
 ## Authors: Josh Wildey, Ian Hogan
 
 ### Directory Structure
-*arm/Robotic_Arm: Source code for Arduino
-  -Robotic_Arm folder required for Arduino IDE
-*glove: Source code and Makefile for User Space program running on Gumstix
-*gloveDriver: Source code and Makefile for Kernel Driver running on Gumstix
-*i2cDriver: Source code and Makefile for 3rd and final attempt at getting I2C to work
-*pi: Source code and Makefile for User Space program that acted as a command router running on the Raspberry Pi
+* arm/Robotic_Arm: Source code for Arduino
+  - Robotic_Arm folder required for Arduino IDE
+* glove: Source code and Makefile for User Space program running on Gumstix
+* gloveDriver: Source code and Makefile for Kernel Driver running on Gumstix
+* i2cDriver: Source code and Makefile for 3rd and final attempt at getting I2C to work
+* pi: Source code and Makefile for User Space program that acted as a command router running on the Raspberry Pi
 
 ### Build Instructions
 
