@@ -80,7 +80,7 @@ int main(int argc, char **argv)
             gloveData.g = (uint8_t) g;
         }
 
-        printf("X: %d Y: %d Z: %d G: %d\n", gloveData.x, gloveData.y, gloveData.z, gloveData.g);
+        //printf("X: %d Y: %d Z: %d G: %d\n", gloveData.x, gloveData.y, gloveData.z, gloveData.g);
 
         // Close file
         fclose(pFile);
@@ -93,8 +93,8 @@ int main(int argc, char **argv)
         }
 
         // Sleep for desired rate
-        //usleep(100000);
-        sleep(1);
+        usleep(100000);
+        //sleep(1);
     }
 
     return 0;

@@ -186,17 +186,15 @@ static void timerCallbackFcn(unsigned long data)
     }
 
     // Z Direction State
-    if (tilt != 0 && tilt_cnt >=10)
+    if (tilt != 0)
     {
         if (tilt_state == 0) {
             tilt_z = 2;    // set z backwards
         } else {
             tilt_z = 1;    // set z forwards
         }
-        tilt_cnt = 0;
     } else {
         tilt_z = 0;    // do nothing
-        tilt_cnt++;
     }    
 
     // Gripper 
