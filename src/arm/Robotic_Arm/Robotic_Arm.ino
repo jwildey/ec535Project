@@ -141,13 +141,14 @@ void grip_range_test() {
 }
 
 // Min Motor speed is ~100
-// Will engage for 200ms and go low/stop
+// Will engage for 50ms and go low/stop
 // Calibrations have been made to match a single
 // movement between both directions of the motor
 // due to the motor favoring 1 direction over the other
 void wristUp() {
     wristValue = analogRead(wristPot);
     elbowValue = analogRead(elbowPot);
+    // checks if the location of the wrist or elbow is at a limit
     if ( wristValue < 460 && elbowValue > 220 ) {
         digitalWrite(in1_2, HIGH);
         digitalWrite(in2_2, LOW);
@@ -161,6 +162,7 @@ void wristUp() {
 void wristDown() {
     wristValue = analogRead(wristPot);
     elbowValue = analogRead(elbowPot);
+    // checks if the location of the wrist or elbow is at a limit
     if ( wristValue > 230 ) {
         digitalWrite(in1_2, LOW);
         digitalWrite(in2_2, HIGH);
@@ -174,6 +176,7 @@ void wristDown() {
 void elbowUp() {
     wristValue = analogRead(wristPot);
     elbowValue = analogRead(elbowPot);
+  // checks if the location of the wrist or elbow is at a limit
     if ( elbowValue < 940 || wristValue < 840 ) {
         digitalWrite(in3_1, HIGH);
         digitalWrite(in4_1, LOW);
@@ -187,6 +190,7 @@ void elbowUp() {
 void elbowDown() {
     elbowValue = analogRead(elbowPot);
     wristValue = analogRead(wristPot);
+    // checks if the location of the wrist or elbow is at a limit
     if ( elbowValue > 230 ) {
         digitalWrite(in3_1, LOW);
         digitalWrite(in4_1, HIGH);
