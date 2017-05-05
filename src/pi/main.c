@@ -1,5 +1,17 @@
 /**
- * TODO
+ * \file    main.c
+ * \brief   This is the source for the Raspberry Pi data routing
+ *          software.
+ * \author  Josh Wildey
+ *          Ian Hogan
+ *
+ * Course   EC535
+ *          Final Project
+ *
+ * This file implements a bluetooth connection initialization,
+ * a USB serial connection and a loop to listen for data on the
+ * bluetooth connection which then adds a header and writes said
+ * data onto the USB serial connection.
  */
 
 #include <stdio.h>
@@ -12,7 +24,7 @@
 #include <fcntl.h>			//Used for UART
 #include <termios.h>		//Used for UART
 
-
+// Command Data Structure
 typedef struct data {
 	uint8_t x;
 	uint8_t y;
@@ -22,7 +34,11 @@ typedef struct data {
 
 
 /**
- * TODO
+ * \brief Bluetooth Client Init
+ *
+ * This function initializes a client connection via bluetooth.
+ *
+ * \return <0 on error, integer File descriptor of BT connection otherwise
  */
 int initBT()
 {
@@ -58,7 +74,11 @@ int initBT()
 
 
 /**
- * TODO
+ * \brief USB Serial Connection Init
+ *
+ * This function initializes a USB Serial Connection using /dev/ttyACM0
+ *
+ * \return <0 on error, integer File descriptor of USB Serial Connection
  */
 int initUSB()
 {
@@ -97,7 +117,14 @@ int initUSB()
 
 
 /**
- * TODO
+ * \brief Main entrance to program
+ *
+ * This program provides a means to route data command
+ * from the Gumstix controller to the Arduino.
+ *
+ * \param argc - number of arguments
+ * \param **argv - pointer to arguments
+ * \return <0 is error, 0 success
  */
 int main(int argc, char **argv)
 {
